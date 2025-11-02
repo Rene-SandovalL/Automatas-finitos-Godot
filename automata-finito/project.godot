@@ -11,16 +11,16 @@ config_version=5
 [application]
 
 config/name="Automata-finito"
-run/main_scene="uid://ckc8ejl6163jm"
+run/main_scene="uid://h8x28nv2vsmt"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=534
-window/size/viewport_height=300
-window/size/window_width_override=1280
-window/size/window_height_override=720
+window/size/viewport_width=384
+window/size/viewport_height=448
+window/size/window_width_override=768
+window/size/window_height_override=896
 window/stretch/mode="canvas_items"
 
 [input]
