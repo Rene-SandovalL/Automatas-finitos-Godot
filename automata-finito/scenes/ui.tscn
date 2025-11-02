@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcwthgbkd37m5"]
+
+[ext_resource type="FontFile" uid="uid://cpdcphv3ai8bv" path="res://assets/fonts/PublicPixel.ttf" id="1_nt7q6"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="BottomPanel" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -196.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="contentLayout" type="VBoxContainer" parent="BottomPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="alfabeto" type="Label" parent="BottomPanel/MarginContainer/contentLayout"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nt7q6")
+theme_override_font_sizes/font_size = 12
+text = "Alfabeto"
+
+[node name="commandList" type="Label" parent="BottomPanel/MarginContainer/contentLayout"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nt7q6")
+theme_override_font_sizes/font_size = 10
+text = "w:mover arriba
+s:mover abajo
+d:mover derecha
+i:apuntar arriba
+j:apuntar izquierda
+k:apuntar abajo
+l:apuntar derecha
+f:disparar
+m:dejar de apuntar"
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomPanel/MarginContainer/contentLayout"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="InputLayout" type="HBoxContainer" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nt7q6")
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Introduce"
+
+[node name="Button" type="Button" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nt7q6")
+theme_override_font_sizes/font_size = 10
+text = "Ejecutar"

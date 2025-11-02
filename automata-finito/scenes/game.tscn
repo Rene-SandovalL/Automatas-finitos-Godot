@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://h8x28nv2vsmt"]
+[gd_scene load_steps=5 format=3 uid="uid://h8x28nv2vsmt"]
 
 [ext_resource type="Script" uid="uid://cklhu5y2tqj65" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://3qu471hoyd82" path="res://scenes/nivel.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://ckc8ejl6163jm" path="res://scenes/node_2d.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://dcwthgbkd37m5" path="res://scenes/ui.tscn" id="4_lbhrr"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_lnu2h")
@@ -11,3 +12,5 @@ script = ExtResource("1_lnu2h")
 
 [node name="Player" parent="Nivel" instance=ExtResource("2_lnu2h")]
 position = Vector2(-70, -34)
+
+[node name="UI" parent="." instance=ExtResource("4_lbhrr")]
