@@ -117,11 +117,11 @@ func move_finish() -> void:
 
 # --- Constantes del Autómata ---
 const TILE_SIZE = 64
-const MOVEMENT_DURATION = 0.25 # Duración del movimiento en segundos
+const MOVEMENT_DURATION = 0.40 # Duración del movimiento en segundos
 
 # --- ¡LA CLAVE DEL POSICIONAMIENTO! ---
 # Basado en tu imagen, el suelo (0,0) está en el tile (1,1) del TileMap.
-const TILEMAP_OFFSET = Vector2i(0, 0) 
+const TILEMAP_OFFSET = Vector2i(-1.5, -1) 
 
 # --- Estado Actual del Autómata ---
 var current_state: Vector2i = Vector2i(0, 0) # Estado inicial (0,0 lógico)
@@ -240,7 +240,7 @@ func _grid_to_world(grid_pos: Vector2i) -> Vector2:
 	var final_tile_pos = grid_pos + TILEMAP_OFFSET
 	
 	# 2. Convierte la posición del tile visual a píxeles y centra
-	var world_x = (final_tile_pos.x * TILE_SIZE) + (TILE_SIZE / 2)
-	var world_y = (final_tile_pos.y * TILE_SIZE) + (TILE_SIZE / 2)
+	var world_x = (final_tile_pos.x * TILE_SIZE) + (TILE_SIZE / 10.0)
+	var world_y = (final_tile_pos.y * TILE_SIZE) + (TILE_SIZE / 2.0)
 	
 	return Vector2(world_x, world_y)
