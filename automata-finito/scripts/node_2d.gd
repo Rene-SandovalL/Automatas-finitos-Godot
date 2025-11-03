@@ -1,3 +1,5 @@
+extends CharacterBody2D
+
 """
 extends CharacterBody2D
 
@@ -35,6 +37,7 @@ func update_animation(input_direction):
 		animated_sprite.play("idle")
 """
 
+"""
 # Player.gd
 # REEMPLAZA todo tu script de Player con esto.
 # Player.gd
@@ -109,3 +112,135 @@ func move_finish() -> void:
 # podrías hacerlo, pero para el movimiento basado en Tween no es directo aquí.
 # Si tus colisiones no son complejas, mover la 'position' o 'global_position'
 # directamente (como hace el tween) funciona para un juego tile-based simple.
+"""
+# Player.gd (o como se llame tu script en el nodo Player)
+
+# --- Constantes del Autómata ---
+const TILE_SIZE = 64
+const MOVEMENT_DURATION = 0.25 # Duración del movimiento en segundos
+
+# --- ¡LA CLAVE DEL POSICIONAMIENTO! ---
+# Basado en tu imagen, el suelo (0,0) está en el tile (1,1) del TileMap.
+const TILEMAP_OFFSET = Vector2i(0, 0) 
+
+# --- Estado Actual del Autómata ---
+var current_state: Vector2i = Vector2i(0, 0) # Estado inicial (0,0 lógico)
+var is_processing: bool = false # Bloquea el autómata
+
+# --- Transiciones Válidas (Usando tu lógica 0-indexada) ---
+# Si un movimiento no está aquí, es un muro (falla).
+var transitions = {
+	# FILA 0 (arriba)
+	Vector2i(0,0): {"d": Vector2i(1,0), "s": Vector2i(0,1)}, # inicio
+	Vector2i(1,0): {"d": Vector2i(2,0), "s": Vector2i(1,1)}, 
+	Vector2i(2,0): {"d": Vector2i(3,0), "s": Vector2i(2,1)}, 
+	Vector2i(3,0): {"s": Vector2i(3,1)}, # Borde derecho
+
+	# FILA 1 (centro)
+	Vector2i(0,1): {"d": Vector2i(1,1), "s": Vector2i(0,2), "w": Vector2i(0,0)},
+	Vector2i(1,1): {"d": Vector2i(2,1), "s": Vector2i(1,2), "w": Vector2i(1,0)},
+	Vector2i(2,1): {"d": Vector2i(3,1), "s": Vector2i(2,2), "w": Vector2i(2,0)},
+	Vector2i(3,1): {"s": Vector2i(3,2), "w": Vector2i(3,0)}, # Borde derecho
+
+	# FILA 2 (abajo)
+	Vector2i(0,2): {"d": Vector2i(1,2), "w": Vector2i(0,1)}, # Borde abajo
+	Vector2i(1,2): {"d": Vector2i(2,2), "w": Vector2i(1,1)},
+	Vector2i(2,2): {"d": Vector2i(3,2), "w": Vector2i(2,1)},
+	Vector2i(3,2): {"w": Vector2i(3,1)} # Borde abajo-derecha
+}
+
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
+
+func _ready():
+	# Establece el estado inicial y la posición visual
+	current_state = Vector2i(0, 0)
+	global_position = _grid_to_world(current_state)
+	animated_sprite.play("idle") # Asumiendo que tienes anim "idle"
+
+# --- Función Pública ---
+# game.gd llamará a esta función
+func process_word(palabra: String) -> bool:
+	if is_processing:
+		return false # Ya está procesando una palabra
+
+	is_processing = true
+	
+	# Iniciamos un proceso asíncrono para movernos
+	_execute_sequence(palabra)
+	
+	# Devolvemos 'true' inmediatamente para que la UI sepa que se aceptó
+	# (El resultado real se verá en la animación)
+	return true 
+
+# --- Ejecutor de Secuencia (Paso a Paso) ---
+func _execute_sequence(palabra: String):
+	var temp_state = current_state # Usamos un estado temporal para la ejecución
+	
+	for letra in palabra.to_lower(): # Usamos to_lower() para consistencia
+		var command = String(letra) # Convertir char a String
+		
+		# --- 1. Validación del Autómata ---
+		if not transitions.has(temp_state):
+			print("¡ERROR! Estado desconocido: ", temp_state)
+			_finish_processing(false) # Fallo
+			return
+
+		var possible_moves = transitions[temp_state]
+		
+		if not possible_moves.has(command):
+			print("¡ERROR! Movimiento inválido '%s' desde %s" % [command, temp_state])
+			_finish_processing(false) # Fallo (chocó con muro)
+			return
+
+		# --- 2. Transición de Estado (Lógica) ---
+		temp_state = possible_moves[command] # Actualiza el estado lógico
+		
+		# --- 3. Transición Visual (Animación y Tween) ---
+		var anim_string = "idle"
+		match command:
+			"w": anim_string = "walk_up"
+			"s": anim_string = "walk_down"
+			"d": anim_string = "walk_right"
+			# (Aquí añadirías "a": "walk_left" si existiera)
+
+		animated_sprite.play(anim_string)
+		
+		var tween = create_tween()
+		var new_world_pos = _grid_to_world(temp_state)
+		
+		# Mueve el sprite suavemente
+		tween.tween_property(self, "global_position", new_world_pos, 0.25) # 0.25 seg
+		
+		# ¡ESPERA! Pausa la ejecución hasta que el tween termine
+		await tween.finished
+		
+		animated_sprite.play("idle")
+	
+	# --- 4. Fin de la Palabra ---
+	# Si el bucle termina, la palabra fue exitosa
+	current_state = temp_state # Actualiza el estado real
+	_finish_processing(true) # Éxito
+
+func _finish_processing(success: bool):
+	is_processing = false
+	# Aquí puedes emitir una señal si game.gd necesita saber el resultado final
+	if success:
+		print("Palabra completada. Estado final: ", current_state)
+	else:
+		print("Palabra fallida.")
+		# (Aquí podrías revertir al estado inicial si quieres)
+		# current_state = Vector2i(0,0)
+		# global_position = _grid_to_world(current_state)
+
+# --- ¡LA FUNCIÓN CLAVE CORREGIDA! ---
+# Convierte Lógica (0,0) -> Píxeles (96, 96)
+func _grid_to_world(grid_pos: Vector2i) -> Vector2:
+	# 1. Suma el offset de la pared
+	# (0,0) Lógico + (1,1) Offset = (1,1) Visual
+	var final_tile_pos = grid_pos + TILEMAP_OFFSET
+	
+	# 2. Convierte la posición del tile visual a píxeles y centra
+	var world_x = (final_tile_pos.x * TILE_SIZE) + (TILE_SIZE / 2)
+	var world_y = (final_tile_pos.y * TILE_SIZE) + (TILE_SIZE / 2)
+	
+	return Vector2(world_x, world_y)

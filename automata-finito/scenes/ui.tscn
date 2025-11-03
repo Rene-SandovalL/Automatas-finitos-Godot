@@ -47,21 +47,26 @@ m:dejar de apuntar"
 [node name="MarginContainer" type="MarginContainer" parent="BottomPanel/MarginContainer/contentLayout"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
+theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
 [node name="InputLayout" type="HBoxContainer" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
+[node name="InputBox" type="LineEdit" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_nt7q6")
 theme_override_font_sizes/font_size = 10
-placeholder_text = "Introduce"
+placeholder_text = "Introduce una palabra"
 
-[node name="Button" type="Button" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
+[node name="ExecuteButton" type="Button" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_nt7q6")
 theme_override_font_sizes/font_size = 10
 text = "Ejecutar"
+
+[node name="StatusLabel" type="Label" parent="BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout"]
+layout_mode = 2
+text = "adf"

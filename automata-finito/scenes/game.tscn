@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cklhu5y2tqj65" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://3qu471hoyd82" path="res://scenes/nivel.tscn" id="1_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://ckc8ejl6163jm" path="res://scenes/node_2d.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://ckc8ejl6163jm" path="res://scenes/isaac.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://dcwthgbkd37m5" path="res://scenes/ui.tscn" id="4_lbhrr"]
 
 [node name="Game" type="Node"]

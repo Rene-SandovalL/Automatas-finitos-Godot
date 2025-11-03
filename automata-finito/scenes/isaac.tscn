@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://ckc8ejl6163jm"]
+[gd_scene load_steps=56 format=3 uid="uid://ckc8ejl6163jm"]
 
 [ext_resource type="Texture2D" uid="uid://b1gy4ab1r0vjm" path="res://assets/sprites/IsaacDown.png" id="1_4vge2"]
 [ext_resource type="Script" uid="uid://d3qr8rdpa3bq5" path="res://scripts/node_2d.gd" id="1_j7wrs"]
@@ -357,6 +357,10 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="GDScript" id="GDScript_nwymj"]
+script/source = "extends Node2D
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wuir"]
 size = Vector2(26, 31)
 
@@ -370,6 +374,7 @@ sprite_frames = SubResource("SpriteFrames_w8l5x")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.94817
+script = SubResource("GDScript_nwymj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(157, 112.5)
