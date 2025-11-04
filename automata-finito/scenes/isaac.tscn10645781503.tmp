@@ -1,13 +1,12 @@
-[gd_scene load_steps=64 format=3 uid="uid://ckc8ejl6163jm"]
+[gd_scene load_steps=60 format=3 uid="uid://ckc8ejl6163jm"]
 
 [ext_resource type="Texture2D" uid="uid://b1gy4ab1r0vjm" path="res://assets/sprites/IsaacDown.png" id="1_4vge2"]
-[ext_resource type="Script" uid="uid://d3qr8rdpa3bq5" path="res://scripts/player.gd" id="1_j7wrs"]
+[ext_resource type="Script" uid="uid://d3qr8rdpa3bq5" path="res://scripts/node_2d.gd" id="1_j7wrs"]
 [ext_resource type="Texture2D" uid="uid://67fcpbouk0bv" path="res://assets/sprites/isaacSpritesLeft.png" id="2_04qyp"]
 [ext_resource type="Texture2D" uid="uid://ci7kuf33evve4" path="res://assets/sprites/Isaacidle.png" id="2_fws66"]
 [ext_resource type="Texture2D" uid="uid://bwb2jduik3l8f" path="res://assets/sprites/isaacDeath.png" id="2_qrs6h"]
 [ext_resource type="Texture2D" uid="uid://henjn2nngsw6" path="res://assets/sprites/isaacSprites2.png" id="3_j7wrs"]
 [ext_resource type="Texture2D" uid="uid://lvtd2v1veesf" path="res://assets/sprites/IsaacUp.png" id="4_fws66"]
-[ext_resource type="Texture2D" uid="uid://bw3c8pvela40n" path="res://assets/sprites/IsaacThumbsUp.png" id="4_nmd72"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nmd72"]
 atlas = ExtResource("2_qrs6h")
@@ -44,18 +43,6 @@ region = Rect2(129, 4, 30, 42)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ak85g"]
 atlas = ExtResource("2_fws66")
 region = Rect2(159, 4, 30, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_05pw8"]
-atlas = ExtResource("4_nmd72")
-region = Rect2(32, 0, 32, 49)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_374n6"]
-atlas = ExtResource("4_nmd72")
-region = Rect2(0, 0, 32, 49)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hr5dx"]
-atlas = ExtResource("4_nmd72")
-region = Rect2(64, 0, 32, 49)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hh0fu"]
 atlas = ExtResource("1_4vge2")
@@ -258,20 +245,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_05pw8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_374n6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hr5dx")
-}],
-"loop": false,
-"name": &"thumbs_up",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_hh0fu")
 }, {
 "duration": 1.0,
@@ -425,7 +398,7 @@ script = ExtResource("1_j7wrs")
 position = Vector2(157, 114)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_w8l5x")
-animation = &"thumbs_up"
+animation = &"death"
 autoplay = "idle"
 frame = 2
 frame_progress = 1.0
