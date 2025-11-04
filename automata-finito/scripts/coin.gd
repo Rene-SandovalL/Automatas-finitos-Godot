@@ -1,32 +1,40 @@
 # Moneda.gd
 extends Area2D
 
-# --- YA NO NECESITAMOS ESTA LÍNEA, LA ANIMACIÓN DE PARTÍCULAS ESTÁ EN EL SPRITE ---
-# var ParticulaEfecto = preload("res://scenes/coineffect.tscn") 
+# --- ¡CAMBIO AQUÍ! ---
+# 1. Carga el archivo de sonido MP3
+# (¡Asegúrate de que esta ruta y el nombre del archivo MP3 sean correctos!)
+var SonidoMoneda = preload("res://Assets/SFX/nickelpickup.mp3") 
 
-@onready var animated_sprite: AnimatedSprite2D = $CoinSprite # Renombré a 'animated_sprite' para claridad
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var colision: CollisionShape2D = $CollisionShape2D
 
-# Bandera para evitar que la moneda se active múltiples veces
 var _ya_recolectada: bool = false
 
+func _ready():
+	if animated_sprite:
+		animated_sprite.play("default") 
 
-# --- Función que se llama cuando un cuerpo entra en el Area2D de la moneda ---
 func _on_body_entered(body: Node2D) -> void:
-	# Solo ejecuta la lógica si la moneda no ha sido recolectada ya
-	# y si el cuerpo que entró es tu Player (CharacterBody2D)
 	if not _ya_recolectada and body is CharacterBody2D: 
-		_ya_recolectada = true # Marca la moneda como recolectada
+		_ya_recolectada = true 
 
-		# --- ORDEN ESPECÍFICO SOLICITADO ---
+		if colision:
+			colision.disabled = true
 		
-		# 1. Desactiva la colisión inmediatamente
-	
-			# Hacmos visible el AnimatedSprite para que la animación 'pickup' se vea
-		animated_sprite.play("pickup")
-			
-			# Espera a que la animación de "pickup" termine
-		await animated_sprite.animation_finished
+		# Llama a la función para reproducir el sonido
+		_play_sound_effect()
 		
-		# 4. Elimina la moneda de la escena una vez que la animación de "pickup" ha terminado
+		if animated_sprite:
+			animated_sprite.visible = true 
+			animated_sprite.play("pickup")
+			await animated_sprite.animation_finished
+		
 		queue_free()
+
+func _play_sound_effect():
+	var audio_player = AudioStreamPlayer.new()
+	audio_player.stream = SonidoMoneda
+	audio_player.autoplay = true 
+	audio_player.finished.connect(audio_player.queue_free)
+	get_tree().root.add_child(audio_player)

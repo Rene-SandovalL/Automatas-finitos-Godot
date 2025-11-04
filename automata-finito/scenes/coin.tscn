@@ -81,7 +81,6 @@ script = ExtResource("1_i64fm")
 position = Vector2(173, 78)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_i64fm")
-animation = &"pickup"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Coin"]

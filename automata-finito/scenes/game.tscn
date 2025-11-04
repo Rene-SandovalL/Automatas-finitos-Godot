@@ -11,10 +11,16 @@ script = ExtResource("1_lnu2h")
 
 [node name="Nivel" parent="." instance=ExtResource("1_yqjtg")]
 
-[node name="Node2D" parent="Nivel" instance=ExtResource("5_iywne")]
+[node name="coin" parent="Nivel" instance=ExtResource("5_iywne")]
 position = Vector2(-74, 81)
 
 [node name="Player" parent="Nivel" instance=ExtResource("2_lnu2h")]
 position = Vector2(-73, -31)
+
+[node name="coin2" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(-74, 153)
+
+[node name="coin3" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(-7, 151)
 
 [node name="UI" parent="." instance=ExtResource("4_lbhrr")]

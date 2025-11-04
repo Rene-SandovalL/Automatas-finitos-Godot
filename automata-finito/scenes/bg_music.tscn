@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxsxr0p02fdh0"]
+
+[ext_resource type="AudioStream" uid="uid://bpu8lwu46fio2" path="res://assets/music/bgMusicInnocencedGlitched.mp3" id="1_f6gl3"]
+
+[node name="bgMusic" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_f6gl3")
+volume_db = -10.884
+autoplay = true
