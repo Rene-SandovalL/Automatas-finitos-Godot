@@ -31,21 +31,18 @@ func _ready():
 	input_line.text_submitted.connect(_on_execute_pressed)
 	
 	# Muestra el alfabeto en la UI
-	status_label.text = "Introduce una palabra"
 
 func _on_execute_pressed():
 	var word = input_line.text.strip_edges() # Lee la palabra
 	if word == "":
-		status_label.text = "Introduce una palabra"
 		return
 
-	status_label.text = "Ejecutando..."
 	input_line.text = "" # Limpia la caja
 	
 	# Llama a la función process_word en el Player
 	var accepted = player_instance.process_word(word)
 	
 	if accepted:
-		status_label.text = "Procesando palabra..."
+		print("Procesando palabra...")
 	else:
-		status_label.text = "¡Error! Ya hay una palabra en ejecución."
+		print ("¡Error! Ya hay una palabra en ejecución.")

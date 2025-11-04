@@ -1,11 +1,24 @@
-[gd_scene load_steps=56 format=3 uid="uid://ckc8ejl6163jm"]
+[gd_scene load_steps=60 format=3 uid="uid://ckc8ejl6163jm"]
 
 [ext_resource type="Texture2D" uid="uid://b1gy4ab1r0vjm" path="res://assets/sprites/IsaacDown.png" id="1_4vge2"]
 [ext_resource type="Script" uid="uid://d3qr8rdpa3bq5" path="res://scripts/node_2d.gd" id="1_j7wrs"]
 [ext_resource type="Texture2D" uid="uid://67fcpbouk0bv" path="res://assets/sprites/isaacSpritesLeft.png" id="2_04qyp"]
 [ext_resource type="Texture2D" uid="uid://ci7kuf33evve4" path="res://assets/sprites/Isaacidle.png" id="2_fws66"]
+[ext_resource type="Texture2D" uid="uid://bwb2jduik3l8f" path="res://assets/sprites/isaacDeath.png" id="2_qrs6h"]
 [ext_resource type="Texture2D" uid="uid://henjn2nngsw6" path="res://assets/sprites/isaacSprites2.png" id="3_j7wrs"]
 [ext_resource type="Texture2D" uid="uid://lvtd2v1veesf" path="res://assets/sprites/IsaacUp.png" id="4_fws66"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmd72"]
+atlas = ExtResource("2_qrs6h")
+region = Rect2(61, 0, 61, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vcuo"]
+atlas = ExtResource("2_qrs6h")
+region = Rect2(0, 0, 61, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipwfm"]
+atlas = ExtResource("2_qrs6h")
+region = Rect2(122, 0, 61, 67)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8l5x"]
 atlas = ExtResource("2_fws66")
@@ -194,6 +207,20 @@ region = Rect2(10, 7, 28, 36)
 [sub_resource type="SpriteFrames" id="SpriteFrames_w8l5x"]
 animations = [{
 "frames": [{
+"duration": 1.41,
+"texture": SubResource("AtlasTexture_nmd72")
+}, {
+"duration": 1.41,
+"texture": SubResource("AtlasTexture_6vcuo")
+}, {
+"duration": 1.11,
+"texture": SubResource("AtlasTexture_ipwfm")
+}],
+"loop": false,
+"name": &"death",
+"speed": 4.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w8l5x")
 }, {
@@ -371,9 +398,10 @@ script = ExtResource("1_j7wrs")
 position = Vector2(157, 114)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_w8l5x")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.94817
+frame = 2
+frame_progress = 1.0
 script = SubResource("GDScript_nwymj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
