@@ -1,40 +1,35 @@
 extends CharacterBody2D
 
-
-# --- Constantes del Autómata ---
 const TILE_SIZE = 64
-const MOVEMENT_DURATION = 0.40 # Duración del movimiento en segundos
+const MOVEMENT_DURATION = 0.40 
 
-# (Tu offset con decimales, debe ser Vector2)
 const TILEMAP_OFFSET = Vector2(-1, -1) 
 
-# --- ¡NUEVO! Cargar sonido de muerte ---
-# ¡Asegúrate de que esta ruta sea correcta!
 var SonidoMuerte = preload("res://Assets/SFX/IsaacDies.wav")
-
-# --- Estado Actual del Autómata ---
-var current_state: Vector2i = Vector2i(0, 0) 
 var is_processing: bool = false 
 
-# --- Transiciones Válidas (Tu diccionario) ---
+# --- Estado Actual del Autómata Unica variable ---
+var current_state: Vector2i = Vector2i(0, 0) 
+
+# --- Transiciones Válidas ---
 var transitions = {
 	# FILA 0 (arriba)
-	Vector2i(0,0): {"d": Vector2i(1,0), "s": Vector2i(0,1)}, # inicio
+	Vector2i(0,0): {"d": Vector2i(1,0), "s": Vector2i(0,1)},
 	Vector2i(1,0): {"d": Vector2i(2,0), "s": Vector2i(1,1)}, 
 	Vector2i(2,0): {"d": Vector2i(3,0), "s": Vector2i(2,1)}, 
-	Vector2i(3,0): {"s": Vector2i(3,1)}, # Borde derecho
+	Vector2i(3,0): {"s": Vector2i(3,1)}, 
 
 	# FILA 1 (centro)
 	Vector2i(0,1): {"d": Vector2i(1,1), "s": Vector2i(0,2), "w": Vector2i(0,0)},
 	Vector2i(1,1): {"d": Vector2i(2,1), "s": Vector2i(1,2), "w": Vector2i(1,0)},
 	Vector2i(2,1): {"d": Vector2i(3,1), "s": Vector2i(2,2), "w": Vector2i(2,0)},
-	Vector2i(3,1): {"s": Vector2i(3,2), "w": Vector2i(3,0)}, # Borde derecho
+	Vector2i(3,1): {"s": Vector2i(3,2), "w": Vector2i(3,0)}, 
 
 	# FILA 2 (abajo)
-	Vector2i(0,2): {"d": Vector2i(1,2), "w": Vector2i(0,1)}, # Borde abajo
+	Vector2i(0,2): {"d": Vector2i(1,2), "w": Vector2i(0,1)}, 
 	Vector2i(1,2): {"d": Vector2i(2,2), "w": Vector2i(1,1)},
 	Vector2i(2,2): {"d": Vector2i(3,2), "w": Vector2i(2,1)},
-	Vector2i(3,2): {"w": Vector2i(3,1)} # Borde abajo-derecha
+	Vector2i(3,2): {"w": Vector2i(3,1)} 
 }
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
@@ -42,8 +37,6 @@ var transitions = {
 func _ready():
 	reset_to_start() 
 
-# --- Función Pública ---
-# (Se corrigió 'async' de aquí, no es necesario)
 func process_word(palabra: String) -> bool:
 	if is_processing:
 		return false 
@@ -54,7 +47,6 @@ func process_word(palabra: String) -> bool:
 	
 	return success
 
-# --- Ejecutor de Secuencia (Paso a Paso) ---
 func _execute_sequence(palabra: String) -> bool:
 	var temp_state = current_state 
 	
@@ -78,7 +70,6 @@ func _execute_sequence(palabra: String) -> bool:
 			"w": anim_string = "walk_up"
 			"s": anim_string = "walk_down"
 			"d": anim_string = "walk_right"
-			# (Añadir "a": "walk_left" si existiera)
 
 		animated_sprite.play(anim_string)
 		
@@ -102,22 +93,18 @@ func _finish_processing(success: bool) -> bool:
 		print("Palabra fallida.")
 	return success
 
-# --- ¡FUNCIONES DE CONTROL ACTUALIZADAS! ---
 
 func play_death_animation():
 	is_processing = true 
 	
-	# ¡NUEVO! Reproduce el sonido de muerte
 	_play_sound(SonidoMuerte)
 	
 	animated_sprite.play("death") 
 	await animated_sprite.animation_finished
 
-# --- ¡NUEVA FUNCIÓN DE VICTORIA! ---
 func play_victory_animation():
 	is_processing = true
-	# (Aquí puedes añadir un sonido de victoria si quieres)
-	animated_sprite.play("thumbs_up") # Asegúrate de que esta animación exista
+	animated_sprite.play("thumbs_up") 
 	await animated_sprite.animation_finished
 
 func reset_to_start():
@@ -126,19 +113,14 @@ func reset_to_start():
 	global_position = _grid_to_world(current_state) 
 	animated_sprite.play("idle")
 
-# --- ¡NUEVA FUNCIÓN DE SONIDO! ---
 func _play_sound(stream: AudioStream):
-	# Crea un nodo de audio temporal
 	var audio_player = AudioStreamPlayer.new()
 	audio_player.stream = stream
 	audio_player.autoplay = true
-	audio_player.volume_db = -15.0
-	# Le dice que se borre solo cuando termine
+	audio_player.volume_db = -5.0
 	audio_player.finished.connect(audio_player.queue_free)
-	# Lo añade a la raíz del árbol para que no se borre con el Player
 	get_tree().root.add_child(audio_player)
 
-# --- Función de Coordenadas ---
 func _grid_to_world(grid_pos: Vector2i) -> Vector2:
 	var final_tile_pos = Vector2(grid_pos) + TILEMAP_OFFSET
 	

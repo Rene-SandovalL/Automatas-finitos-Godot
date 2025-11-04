@@ -1,13 +1,11 @@
-# Moneda.gd
 extends Area2D
 
-# --- ¡CAMBIO AQUÍ! ---
-# 1. Carga el archivo de sonido MP3
-# (¡Asegúrate de que esta ruta y el nombre del archivo MP3 sean correctos!)
 var SonidoMoneda = preload("res://Assets/SFX/nickelpickup.mp3") 
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var colision: CollisionShape2D = $CollisionShape2D
+
+@onready var game_node = get_tree().root.get_node("Game")
 
 var _ya_recolectada: bool = false
 
@@ -22,7 +20,11 @@ func _on_body_entered(body: Node2D) -> void:
 		if colision:
 			colision.disabled = true
 		
-		# Llama a la función para reproducir el sonido
+		if game_node:
+			game_node.add_score(1)
+		else:
+			print("¡ERROR en Moneda.gd! No se encontró el nodo 'Game'.")
+
 		_play_sound_effect()
 		
 		if animated_sprite:
