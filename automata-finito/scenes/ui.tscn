@@ -38,12 +38,11 @@ theme_override_font_sizes/font_size = 10
 text = "w:mover arriba
 s:mover abajo
 d:mover derecha
-i:apuntar arriba
-j:apuntar izquierda
-k:apuntar abajo
-l:apuntar derecha
-f:disparar
-m:dejar de apuntar"
+i:disparar arriba
+j:disparar izquierda
+k:disparar abajo
+l:disparar derecha
+"
 
 [node name="MarginContainer" type="MarginContainer" parent="BottomPanel/MarginContainer/contentLayout"]
 layout_mode = 2
