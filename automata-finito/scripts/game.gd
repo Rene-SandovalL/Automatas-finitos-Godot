@@ -4,34 +4,44 @@ extends Node
 # --- Constantes del Juego ---
 const ZONAS_SEGURAS = [Vector2i(1, 2), Vector2i(3, 0)] 
 
+# --- Referencias a Nodos ---
 @onready var player_instance = $Nivel/Player 
-
+@onready var spike_layer = $Nivel/SpikeLayer 
+@onready var game_over_screen = $UI/GameOverScreen 
 @onready var input_line = $UI/BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout/InputBox
 @onready var execute_button = $UI/BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout/ExecuteButton
 @onready var status_label = $UI/BottomPanel/MarginContainer/contentLayout/MarginContainer/InputLayout/StatusLabel
 @onready var alphabet_label: Label = $UI/BottomPanel/MarginContainer/contentLayout/AlphabetLabel 
-
-@onready var game_over_screen = $UI/GameOverScreen 
+@onready var coin_label: Label = $UI.get_node("%CoinLabel") 
 @onready var end_game_label: Label = $UI/GameOverScreen.get_node("%EndGameLabel")
 @onready var restart_button: Button = $UI/GameOverScreen.get_node("%RestartButton")
-@onready var spike_layer = $Nivel/SpikeLayer 
 
-@onready var coin_label: Label = $UI.get_node("%CoinLabel") 
+# --- ¡ALFABETO ACTUALIZADO! ---
+const ALFABETO_TEXT = [
+	"w: mover arriba",
+	"s: mover abajo",
+	"a: mover izquierda", # (Añadido 'a')
+	"d: mover derecha",
+	"i: disparar arriba",
+	"j: disparar izquierda",
+	"k: disparar abajo",
+    "l: disparar derecha"
+]
+# Alfabeto real para validación (eliminados 'f' y 'm')
+const ALFABETO = ["w", "s", "a", "d", "i", "j", "k", "l"]
 
 var score: int = 0
 var is_processing_ui: bool = false 
-
-const ALFABETO = ["w", "s", "d", "a", "i", "j", "k", "l", "f", "m"]
 
 func _ready():
 	execute_button.pressed.connect(_on_execute_pressed)
 	input_line.text_submitted.connect(_on_execute_pressed)
 	restart_button.pressed.connect(_on_restart_pressed)
 	
+#	alphabet_label.text = "ALFABETO\n" + "\n".join(ALFABETO_TEXT) # Muestra el nuevo alfabeto
 	
 	_reset_level()
 
-# --- ¡NUEVA FUNCIÓN! ---
 func add_score(amount: int):
 	score += amount
 	_update_score_ui()
@@ -61,7 +71,6 @@ func _on_execute_pressed():
 	else:
 		_show_end_screen(false)
 
-
 func _show_end_screen(is_win: bool):
 	spike_layer.show()
 	
@@ -80,10 +89,8 @@ func _on_restart_pressed():
 func _reset_level():
 	game_over_screen.hide()
 	spike_layer.hide()
-	
 	score = 0
 	_update_score_ui()
-	
 	_unlock_ui()
 
 func _lock_ui():

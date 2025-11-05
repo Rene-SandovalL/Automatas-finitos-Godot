@@ -457,3 +457,5 @@ script = SubResource("GDScript_nwymj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(157.5, 115)
 shape = SubResource("RectangleShape2D_1wuir")
+
+[node name="PuntoDeDisparo" type="Marker2D" parent="."]
