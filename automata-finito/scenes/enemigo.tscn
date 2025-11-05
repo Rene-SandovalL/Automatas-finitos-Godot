@@ -55,12 +55,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0chwd")
 }, {
-"duration": 3.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_5jixv")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 2.5,
@@ -84,15 +84,17 @@ animations = [{
 size = Vector2(21, 33)
 
 [node name="Enemigo" type="Area2D" groups=["Enemigos"]]
+collision_layer = 2
 script = ExtResource("1_1yqjy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(96, 47)
-scale = Vector2(1.2, 1.2)
+scale = Vector2(1.1, 1.1)
 sprite_frames = SubResource("SpriteFrames_1wecl")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.124020815
+frame = 4
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(95.5, 47.5)
