@@ -23,8 +23,8 @@ BgMusic="*res://scenes/bg_music.tscn"
 
 window/size/viewport_width=384
 window/size/viewport_height=512
-window/size/window_width_override=768
-window/size/window_height_override=896
+window/size/window_width_override=704
+window/size/window_height_override=832
 window/stretch/mode="canvas_items"
 
 [input]
