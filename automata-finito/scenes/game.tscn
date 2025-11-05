@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://h8x28nv2vsmt"]
+[gd_scene load_steps=7 format=3 uid="uid://h8x28nv2vsmt"]
 
 [ext_resource type="Script" uid="uid://cklhu5y2tqj65" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://3qu471hoyd82" path="res://scenes/nivel.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://ckc8ejl6163jm" path="res://scenes/isaac.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://b7xad2hqe3qbr" path="res://scenes/enemigo.tscn" id="3_p57ef"]
 [ext_resource type="PackedScene" uid="uid://dcwthgbkd37m5" path="res://scenes/ui.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://3rp722lqagu0" path="res://scenes/coin.tscn" id="5_iywne"]
 
@@ -11,8 +12,11 @@ script = ExtResource("1_lnu2h")
 
 [node name="Nivel" parent="." instance=ExtResource("1_yqjtg")]
 
+[node name="Enemigo" parent="Nivel" instance=ExtResource("3_p57ef")]
+position = Vector2(192, 27)
+
 [node name="coin" parent="Nivel" instance=ExtResource("5_iywne")]
-position = Vector2(-74, 81)
+position = Vector2(-73, 84)
 
 [node name="Player" parent="Nivel" instance=ExtResource("2_lnu2h")]
 position = Vector2(-73, -31)
@@ -20,7 +24,28 @@ position = Vector2(-73, -31)
 [node name="coin2" parent="Nivel" instance=ExtResource("5_iywne")]
 position = Vector2(-74, 153)
 
+[node name="coin6" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(48, 85)
+
+[node name="Enemigo2" parent="Nivel" instance=ExtResource("3_p57ef")]
+position = Vector2(63, 158)
+
+[node name="coin5" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(116, 84)
+
+[node name="coin4" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(116, 152)
+
+[node name="coin9" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(-12, 15)
+
+[node name="coin8" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(52, 16)
+
+[node name="coin7" parent="Nivel" instance=ExtResource("5_iywne")]
+position = Vector2(-12, 84)
+
 [node name="coin3" parent="Nivel" instance=ExtResource("5_iywne")]
-position = Vector2(-7, 151)
+position = Vector2(47, 153)
 
 [node name="UI" parent="." instance=ExtResource("4_lbhrr")]
